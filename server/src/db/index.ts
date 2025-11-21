@@ -1,12 +1,10 @@
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle, LibSQLDatabase } from "drizzle-orm/libsql";
+import * as schema from "./schema";
 
-export const db = drizzle({
+export const db: LibSQLDatabase<typeof schema> = drizzle({
 	connection: {
 		url: process.env.TURSO_DATABASE_URL!,
 		authToken: process.env.TURSO_AUTH_TOKEN!,
 	},
+	schema,
 });
-
-if (!db) {
-	console.log("Error db");
-}
